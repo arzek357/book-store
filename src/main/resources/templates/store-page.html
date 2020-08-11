@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Book store</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <div th:replace="~{navigation :: navigation(BookStore)}"/>
+
+    <h1>Магазин книг</h1>
+    <h4>Фильтр</h4>
+    <form th:accept="@{'/books'}" method="get">
+        <div class="form-group">
+            <label>Минимальная цена</label>
+            <input type="number" th:value="${param.min_price != null ? param.min_price : ''}" class="form-control" name="min_price">
+        </div>
+        <div class="form-group">
+            <label>Максимальная цена</label>
+            <input type="number" th:value="${param.max_price != null ? param.max_price : ''}" class="form-control" name="max_price">
+        </div>
+        <div class="form-group">
+            <label>Поиск по имени</label>
+            <input type="text" th:value="${param.name_param != null ? param.name_param : ''}" class="form-control" name="name_param">
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" name="category" value="FANTASY">
+            <label class="form-check-label" for="inlineCheckbox1">Фэнтэзи</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" name="category" value="FANTASTIC">
+            <label class="form-check-label" for="inlineCheckbox2">Фантастика</label>
+        </div>
+        <div style="margin-top: 20px">
+            <button type="submit" class="btn btn-primary">Применить</button>
+            <a th:href="@{'/books'}" class="btn btn-primary">Список всех книг</a>
+        </div>
+    </form>
+    <br>
+    <br>
+    <h4>Список книг:</h4>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <td>Название</td>
+            <td>Описание</td>
+            <td>Цена</td>
+            <td>Год издания</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="b : ${books}">
+            <td th:text="${b.title}"></td>
+            <td th:text="${b.description}"></td>
+            <td th:text="${b.price}"></td>
+            <td th:text="${b.publishYear}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li class="page-item" th:classappend="${books.isFirst() ? 'disabled':''}">
+                <a class="page-link"
+                   th:href="@{'/books/?p='+ ${books.previousOrFirstPageable().getPageNumber() + 1}+${filterDef}}">Назад</a>
+            </li>
+
+            <li class="page-item" th:classappend="${books.getNumber() + 1 == i ? 'active' : ''}"
+                th:each="i : ${#numbers.sequence(1, books.getTotalPages())}">
+                <a class="page-link" th:text="${i}" th:href="@{'/books/?p=' + ${i}+${filterDef}}"></a>
+            </li>
+
+            <li class="page-item" th:classappend="${books.isLast() ? 'disabled':''}">
+                <a class="page-link"
+                   th:href="@{'/books/?p='+ ${books.nextOrLastPageable().getPageNumber() + 1}+${filterDef}}">Вперед</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+</body>
+</html>
