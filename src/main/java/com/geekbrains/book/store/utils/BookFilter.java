@@ -16,6 +16,13 @@ public class BookFilter {
     public BookFilter(Map<String, String> map, List<String> categories) {
         this.spec = Specification.where(null);
         this.filterDefinition = new StringBuilder();
+        if (categories!=null){
+            for (String s: categories){
+                Book.Category category = Book.Category.valueOf(s);
+                spec = spec.or(BookSpecifications.categoryEquals(category));
+                filterDefinition.append("&category=").append(s);
+            }
+        }
         if (map.containsKey("min_price") && !map.get("min_price").isEmpty()) {
             int minPrice = Integer.parseInt(map.get("min_price"));
             spec = spec.and(BookSpecifications.priceGreaterOrEqualsThan(minPrice));
@@ -29,12 +36,6 @@ public class BookFilter {
         if (map.containsKey("name_param") && !map.get("name_param").isEmpty()) {
             spec = spec.and(BookSpecifications.titleLike(map.get("name_param")));
             filterDefinition.append("&name_param=").append(map.get("name_param"));
-        }
-        if (categories!=null){
-            for (String s: categories){
-                spec = spec.or(BookSpecifications.categoryEquals(s));
-                filterDefinition.append("&category=").append(s);
-            }
         }
     }
 }

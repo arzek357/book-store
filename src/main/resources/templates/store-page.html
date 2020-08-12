@@ -29,11 +29,11 @@
             <input type="text" th:value="${param.name_param != null ? param.name_param : ''}" class="form-control" name="name_param">
         </div>
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" name="category" value="FANTASY">
+            <input class="form-check-input" th:checked="${param.category != null && param.category.contains('FANTASY') ? 'true' : 'false'}" type="checkbox" id="inlineCheckbox1" name="category" value="FANTASY">
             <label class="form-check-label" for="inlineCheckbox1">Фэнтэзи</label>
         </div>
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" name="category" value="FANTASTIC">
+            <input class="form-check-input" th:checked="${param.category != null && param.category.contains('FANTASTIC') ? 'true' : 'false'}" type="checkbox" id="inlineCheckbox2" name="category" value="FANTASTIC">
             <label class="form-check-label" for="inlineCheckbox2">Фантастика</label>
         </div>
         <div style="margin-top: 20px">

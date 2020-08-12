@@ -20,7 +20,7 @@ public class Book {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    Category category;
+    private Category category;
 
     @Column(name = "title")
     private String title;
