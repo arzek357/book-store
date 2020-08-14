@@ -26,6 +26,9 @@
                 <li sec:authorize="hasAnyRole('ADMIN', 'SUPERADMIN')" class="nav-item" th:classappend="${activeTab == 'Admin' ? 'active' : ''}">
                     <a class="nav-link" th:href="@{'/admin'}">Админ-панель</a>
                 </li>
+                <li class="nav-item" th:classappend="${activeTab == 'Cart' ? 'active' : ''}">
+                    <a class="nav-link" th:href="@{'/cart'}">Корзина</a>
+                </li>
                 <li sec:authorize="isAnonymous()" class="nav-item">
                     <form class="align-middle" th:action="@{/authenticate}" method="POST">
                         <div class="input-group-prepend">
@@ -42,9 +45,6 @@
                     <form th:action="@{/logout}" method="POST">
                         <button id="navLogout" class="btn btn-outline-secondary" type="submit">Выйти</button>
                     </form>
-                </li>
-                <li class="nav-item" th:classappend="${activeTab == 'Cart' ? 'active' : ''}">
-                    <a class="nav-link" th:href="@{'/cart'}">Корзина</a>
                 </li>
             </ul>
         </div>

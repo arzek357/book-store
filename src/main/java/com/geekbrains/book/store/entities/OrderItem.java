@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @Data
-@Table("order_items")
+@Table(name="order_items")
 @NoArgsConstructor
 public class OrderItem {
     @Id
@@ -16,13 +16,18 @@ public class OrderItem {
     private long id;
 
     @ManyToOne
-    @JoinColumn("order_id")
+    @JoinColumn(name="order_id")
     private Order order;
 
     @ManyToOne
-    @JoinColumn("book_id")
+    @JoinColumn(name="book_id")
     private Book book;
 
     @Column
     private int number;
+
+    public OrderItem(Book book,int number) {
+        this.book = book;
+        this.number=number;
+    }
 }

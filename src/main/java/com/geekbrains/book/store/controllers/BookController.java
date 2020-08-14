@@ -34,12 +34,4 @@ public class BookController {
         model.addAttribute("filterDef",bookFilter.getFilterDefinition());
         return "store-page";
     }
-
-    // Эта часть кода будет сильно скорректирована после темы Spring REST
-    @GetMapping("/rest")
-    @ResponseBody
-    @CrossOrigin("*")
-    public List<Book> getAllBooks() {
-        return bookService.findAll();
-    }
 }

@@ -9,7 +9,7 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
-@Table("orders")
+@Table(name="orders")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,9 +17,13 @@ public class Order {
     private long id;
 
     @ManyToOne
-    @JoinColumn("user_id")
+    @JoinColumn(name="user_id")
     private User user;
 
-    @OneToMany(mappedBy = "order_items")
+    @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItemList;
+
+    public Order(User user) {
+        this.user=user;
+    }
 }

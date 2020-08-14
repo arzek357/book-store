@@ -37,6 +37,23 @@ CREATE TABLE users_roles (
   foreign key (role_id) references roles (id)
 );
 
+CREATE TABLE orders (
+  id bigserial not null,
+  user_id bigint not null,
+  foreign key (user_id) references users (id),
+  primary key (id)
+);
+
+CREATE TABLE order_items (
+  id bigserial not null,
+  order_id bigint not null,
+  book_id bigint not null,
+  number int not null,
+  primary key (id),
+  foreign key (order_id) references orders (id),
+  foreign key (book_id) references books (id)
+);
+
 insert into roles (name)
 values
 ('ROLE_USER'), ('ROLE_ADMIN');

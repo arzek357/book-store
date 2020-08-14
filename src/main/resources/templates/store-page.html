@@ -51,6 +51,7 @@
             <td>Описание</td>
             <td>Цена</td>
             <td>Год издания</td>
+            <td>Действия</td>
         </tr>
         </thead>
         <tbody>
@@ -59,6 +60,15 @@
             <td th:text="${b.description}"></td>
             <td th:text="${b.price}"></td>
             <td th:text="${b.publishYear}"></td>
+            <td>
+                <form class="align-middle" th:action="@{'/cart/add/'+${b.id}}" method="GET">
+                    <div class="input-group-prepend">
+                        <input class="form-control" type="number" value="1" name="number"
+                               aria-describedby="inputGroup-sizing-sm"style="margin-left: 10px; width: 100px">
+                        <button class="btn btn-primary" style="margin-left: 10px;" type="submit">Добавить в корзину</button>
+                    </div>
+                </form>
+            </td>
         </tr>
         </tbody>
     </table>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -14,7 +14,30 @@
 <div class="container">
     <div th:replace="~{navigation :: navigation(Cart)}"/>
     <h1>Корзина</h1>
-
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <td>Название</td>
+            <td>Описание</td>
+            <td>Цена</td>
+            <td>Год издания</td>
+            <td>Кол-во</td>
+            <td>Действия</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="g : ${goods}">
+            <td th:text="${g.getKey().getTitle()}"></td>
+            <td th:text="${g.getKey().getDescription()}"></td>
+            <td th:text="${g.getKey().getPrice()}"></td>
+            <td th:text="${g.getKey().getPublishYear()}"></td>
+            <td th:text="${g.getValue()}"></td>
+            <td> <a th:href="@{'/cart/delete/'+${g.getKey().getId()}}" class="btn btn-primary">Удалить из корзины</a></td>
+        </tr>
+        </tbody>
+    </table>
+    <a sec:authorize="isAuthenticated()" th:hidden="${goods.isEmpty()} ? 'true':'false'" th:href="@{'/cart/create_order'}" class="btn btn-primary">Оформить заказ</a>
+    <span sec:authorize="isAnonymous()">Чтобы оформить заказ, необходим зайти в свой профиль!</span>
 </div>
 </body>
 </html>
