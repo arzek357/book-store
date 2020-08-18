@@ -34,4 +34,9 @@ public class BookController {
         model.addAttribute("filterDef",bookFilter.getFilterDefinition());
         return "store-page";
     }
+
+    @PostMapping
+    public String showAllBooks(){
+        return "redirect:/books";
+    }
 }
