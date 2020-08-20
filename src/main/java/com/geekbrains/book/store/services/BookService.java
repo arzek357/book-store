@@ -30,6 +30,10 @@ public class BookService {
         return bookRepository.findAll(spec, pageable);
     }
 
+    public Page<Book> findAllByPageWithoutSpec(Pageable pageable) {
+        return bookRepository.findAll(pageable);
+    }
+
     public Book findById(Long id) {
         return bookRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Book with id: " + id + " not found"));
     }
@@ -40,5 +44,17 @@ public class BookService {
 
     public void deleteById(Long id) {
         bookRepository.deleteById(id);
+    }
+
+    public boolean existsById(long id){
+        return bookRepository.existsById(id);
+    }
+
+    public void deleteAllBooks(){
+        bookRepository.deleteAll();
+    }
+
+    public long getCount(){
+        return bookRepository.count();
     }
 }

@@ -1,6 +1,7 @@
 package com.geekbrains.book.store.utils;
 
 import com.geekbrains.book.store.entities.Book;
+import com.geekbrains.book.store.entities.BookParams;
 import com.geekbrains.book.store.repositories.specifications.BookSpecifications;
 import lombok.Getter;
 import org.springframework.data.jpa.domain.Specification;
@@ -36,6 +37,23 @@ public class BookFilter {
         if (map.containsKey("name_param") && !map.get("name_param").isEmpty()) {
             spec = spec.and(BookSpecifications.titleLike(map.get("name_param")));
             filterDefinition.append("&name_param=").append(map.get("name_param"));
+        }
+    }
+
+    public BookFilter(BookParams bookParams){
+        this.spec = Specification.where(null);
+        this.filterDefinition = new StringBuilder();
+        if(bookParams.getPageNumber()==0){
+            bookParams.setPageNumber(1);
+        }
+        if (bookParams.getMinPrice()!=0) {
+            spec = spec.and(BookSpecifications.priceGreaterOrEqualsThan(bookParams.getMinPrice()));
+        }
+        if (bookParams.getMaxPrice()!=0) {
+            spec = spec.and(BookSpecifications.priceLesserOrEqualsThan(bookParams.getMaxPrice()));
+        }
+        if (bookParams.getName() != null) {
+            spec = spec.and(BookSpecifications.titleLike(bookParams.getName()));
         }
     }
 }
