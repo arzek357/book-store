@@ -17,8 +17,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/profile/**").authenticated()
-                .antMatchers("/admin/**").hasAnyRole("ADMIN", "SUPERADMIN")
+//                .antMatchers("/profile/**").authenticated()
+//                .antMatchers("/admin/**").hasAnyRole("ADMIN", "SUPERADMIN")
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()
@@ -26,7 +26,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/authenticate")
                 .successForwardUrl("/books")
                 .and()
-                .logout().logoutSuccessUrl("/");
+                .logout().logoutSuccessUrl("/")
+                .and()
+                .csrf().disable();
     }
 
     @Bean
