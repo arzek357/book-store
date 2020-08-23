@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bk="http://localhost:8189/store/spring/ws/books" elementFormDefault="qualified" targetNamespace="http://localhost:8189/store/spring/ws/books">
+	<xs:element name="root">
+		<xs:complexType>
+			<xs:sequence>
+			    <xs:element name="getBookRequest" type="bk:getBookRequest" minOccurs="0"/>
+				<xs:element name="getBookResponse" type="bk:getBookResponse" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+
+	<xs:complexType name="getBookRequest">
+		<xs:sequence>
+			<xs:element name="command" type="xs:string" minOccurs="0"/>
+			<xs:element name="id" type="xs:integer" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="getBookResponse">
+		<xs:sequence>
+			<xs:element name="book" type="bk:book" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="book">
+		<xs:sequence>
+			<xs:element name="id" type="xs:integer"/>
+			<xs:element name="category">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="FANTASY"/>
+						<xs:enumeration value="FANTASTIC"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="title" type="xs:string"/>
+			<xs:element name="description" type="xs:string"/>
+			<xs:element name="price" type="xs:decimal"/>
+			<xs:element name="publish_year" type="xs:integer"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
