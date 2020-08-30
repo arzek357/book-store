@@ -20,13 +20,8 @@ import java.util.Map;
 @Getter
 @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class Cart {
-    private OrderItemService orderItemService;
-    private Map<Book,Integer> goodsList = new HashMap<>();
 
-    @Autowired
-    public void setOrderItemService(OrderItemService orderItemService) {
-        this.orderItemService = orderItemService;
-    }
+    private Map<Book,Integer> goodsList = new HashMap<>();
 
     public void addNewBooks(Book book, int number){
         if (!goodsList.containsKey(book))
@@ -40,13 +35,16 @@ public class Cart {
             goodsList.remove(book);
     }
 
-    @Transactional
     public List<OrderItem> getOrderItemsListAndCleanCart(){
         List<OrderItem> orderItemsList = new ArrayList<>();
         for (Map.Entry<Book,Integer> entry:goodsList.entrySet()){
             orderItemsList.add(new OrderItem(entry.getKey(),entry.getValue()));
         }
-        goodsList.clear();
+        clearCart();
         return orderItemsList;
+    }
+
+    public void clearCart(){
+        goodsList.clear();
     }
 }

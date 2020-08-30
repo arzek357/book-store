@@ -1,19 +1,17 @@
 package com.geekbrains.book.store.entities;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlType;
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "books")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class Book {
     public enum Category{
         FANTASY,FANTASTIC
