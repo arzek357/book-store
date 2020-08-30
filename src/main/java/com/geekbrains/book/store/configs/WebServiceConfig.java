@@ -38,4 +38,5 @@ public class WebServiceConfig extends WsConfigurerAdapter {
     public XsdSchema booksSchema(){
         return new SimpleXsdSchema(new ClassPathResource("bookStore.xsd"));
     }
+
 }

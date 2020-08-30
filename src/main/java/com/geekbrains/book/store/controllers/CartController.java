@@ -1,6 +1,7 @@
 package com.geekbrains.book.store.controllers;
 
 import com.geekbrains.book.store.beans.Cart;
+import com.geekbrains.book.store.entities.Order;
 import com.geekbrains.book.store.services.BookService;
 import com.geekbrains.book.store.services.orderServices.OrderService;
 import com.geekbrains.book.store.utils.BookFilter;
@@ -49,7 +50,7 @@ public class CartController {
 
     @GetMapping("/create_order")
     public String createOrder(Principal principal){
-        orderService.saveNewOrder(principal.getName(),cart.getOrderItemsListAndCleanCart());
-        return "redirect:/books";
+        Order order = orderService.saveNewOrder(principal.getName(),cart.getOrderItemsListAndCleanCart());
+        return "redirect:/msg/order/"+order.getId();
     }
 }

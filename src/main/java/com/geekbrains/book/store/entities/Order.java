@@ -11,6 +11,10 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name="orders")
 public class Order {
+
+        public enum Status{
+            IN_PROGRESS,SUCCESS,CANCELLED
+        }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
@@ -23,7 +27,11 @@ public class Order {
     @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItemList;
 
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
     public Order(User user) {
         this.user=user;
+        this.status=Status.IN_PROGRESS;
     }
 }

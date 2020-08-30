@@ -40,6 +40,7 @@ CREATE TABLE users_roles (
 CREATE TABLE orders (
   id bigserial not null,
   user_id bigint not null,
+  status varchar(30) not null,
   foreign key (user_id) references users (id),
   primary key (id)
 );
