@@ -14,11 +14,17 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
 @RequestMapping("/api/v1/books")
 @AllArgsConstructor
 public class BookRestController {
     private BookService bookService;
+
+    @GetMapping("/all")
+    public List<Book> getAllBooks(){
+        return bookService.findAll();
+    }
 
     @GetMapping
     public Page<Book> getFirstBookPage(){

@@ -9,16 +9,23 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultMatcher;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
-import static org.slf4j.MDC.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest
+
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
 public class BookRestControllerTest {
@@ -40,12 +47,25 @@ public class BookRestControllerTest {
     }
 
     @Test
-    public void getAllBooksTest(){
-        List<Book> allBooks = Arrays.asList(book1,book2,book3);
-        given(bookService.findAll()).willReturn(allBooks);
+    public void getBookById() throws Exception {
+        given(bookService.findById(1L)).willReturn(book1);
 
+        mockMvc.perform(get("/api/v1/books/1")
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.title",is(book1.getTitle())));
     }
 
+    @Test
+    public void getAllBooks() throws Exception {
+        List<Book> bookList = Arrays.asList(book1,book2,book3);
+        given(bookService.findAll()).willReturn(bookList);
 
+        mockMvc.perform(get("/api/v1/books/all")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$",hasSize(3)))
+                .andExpect(jsonPath("$[2].title",is(bookList.get(2).getTitle())));
+    }
 
 }
